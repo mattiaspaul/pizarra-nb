@@ -4,6 +4,7 @@
  * This is, more or less, similar to the live drawing capabilities available 
  * on Powerpoint during live presentations.
  * https://support.office.com/en-us/article/Draw-on-slides-during-a-presentation-80a78a11-cb5d-4dfc-a1ad-a26e877da770
+ * (edit mattias 12-2020: minimal changes, to get more suitable scroll-height and store the image-base64 content correctly)
 */
 
 define([
@@ -38,8 +39,8 @@ define([
     
     var get_html = function() {
         var cell = Jupyter.notebook.get_selected_cell();
-        var w = cell.element.width();
-        var h = cell.element.height();
+        var w = 1.2*cell.element.width();
+        var h = 2*cell.element.height();
         var element = document.getElementsByClassName("selected")[0];
         var header = "Pizarra-nb";
 
@@ -206,7 +207,7 @@ define([
             var result =  pizarra.toPNG();
             Jupyter.notebook.insert_cell_below("markdown");
             var next_cell = Jupyter.notebook.get_next_cell();
-            next_cell.set_text('<img src="' + result + '" />');
+            next_cell.set_text('src="' + result + '"');
             next_cell.execute();
         };
         function reset() {
